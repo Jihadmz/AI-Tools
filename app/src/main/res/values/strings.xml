@@ -9,4 +9,5 @@
     <string name="ExtractedText">Extracted Text</string>
     <string name="copy">Copy</string>
     <string name="TextCopied">Text copied into clipboard</string>
+    <string name="CouldntExtractText">Couldn\'t extract text</string>
 </resources>

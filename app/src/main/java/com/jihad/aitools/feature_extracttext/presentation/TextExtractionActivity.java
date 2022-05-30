@@ -23,9 +23,10 @@ public class TextExtractionActivity extends AppCompatActivity {
         binding = ActivityTextExtractionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //  Back navigation
+        //  Setting up actionbar
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
+        actionBar.setTitle(getString(R.string.ExtractText));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         settingTabs();

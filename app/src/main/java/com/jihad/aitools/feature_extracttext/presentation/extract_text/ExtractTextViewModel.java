@@ -20,6 +20,7 @@ import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.jihad.aitools.R;
 
 import java.io.IOException;
 
@@ -58,7 +59,7 @@ public class ExtractTextViewModel extends ViewModel {
                         }
                     });
         } catch (IOException exception) {
-            Toast.makeText(context, "Couldn't extract text", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.CouldntExtractText), Toast.LENGTH_SHORT).show();
         }
     }
 

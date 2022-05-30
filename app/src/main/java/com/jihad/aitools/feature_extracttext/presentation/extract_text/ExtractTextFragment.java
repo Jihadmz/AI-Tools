@@ -124,12 +124,12 @@ public class ExtractTextFragment extends Fragment {
               handler.post(new Runnable() {
                   @Override
                   public void run() {
-                            viewModel.setChosenImage(result, getContext().getContentResolver());
-                            viewModel.extractText(result, requireContext());
+                      if (result != null) {
+                          viewModel.setChosenImage(result, getContext().getContentResolver());
+                          viewModel.extractText(result, requireContext());
+                      }
                   }
               });
-
-
             }
     ); // end of mGetContent
 
