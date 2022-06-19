@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.jihad.aitools.databinding.ListitemExtracttexthistoryBinding;
 import com.jihad.aitools.feature_extracttext.Core;
@@ -24,8 +25,8 @@ import java.util.List;
 public class ExtractTextHistoryAdapter extends RecyclerView.Adapter<ExtractTextHistoryAdapter.ViewHolder> {
 
     private List<ExtractTextEntity> entities;
-    private Context context;
-    private TabLayout tabLayout;
+    private final Context context;
+    private final TabLayout tabLayout;
 
     public ExtractTextHistoryAdapter(Context context,
                                      List<ExtractTextEntity> entities,
@@ -49,11 +50,19 @@ public class ExtractTextHistoryAdapter extends RecyclerView.Adapter<ExtractTextH
 
         holder.binding.tv.setText(entity.getText());
 
+        // loading the bitmap into the imageview
+        Glide.with(context).load(entity.getImage()).into(holder.binding.iv);
+
+        /*
+        * on history item click, we want to navigate the user back to the extract text fragment with the text and chosen
+        * image of this entity
+        */
         holder.binding.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tabLayout.selectTab(tabLayout.getTabAt(0), true);
                 Core.extractTextViewModel.setExtractedText(holder.binding.tv.getText().toString());
+                Core.extractTextViewModel.setChosenImage(entity.getImage(), context.getContentResolver());
             }
         });
     }

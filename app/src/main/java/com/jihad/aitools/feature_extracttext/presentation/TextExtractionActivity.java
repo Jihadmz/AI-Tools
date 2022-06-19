@@ -65,9 +65,9 @@ public class TextExtractionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mu_deleteAll){
-            if (Core.extractTextHistoryViewModel.getExtractTextEntityList().getValue().size() > 0){
-                Dialog dialog = new Dialog(this);
-            }
+//            if (Core.extractTextHistoryViewModel.getExtractTextEntityList().getValue().size() > 0){
+//                Dialog dialog = new Dialog(this);
+//            }
         }
         return super.onOptionsItemSelected(item);
     }

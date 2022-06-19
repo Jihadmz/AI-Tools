@@ -59,7 +59,7 @@ public class ExtractTextHistoryFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rv);
 
-        Core.extractTextHistoryViewModel.getExtractTextEntityList().observe(requireActivity(), new Observer<List<ExtractTextEntity>>() {
+        Core.extractTextHistoryViewModel.getAll().observe(requireActivity(), new Observer<List<ExtractTextEntity>>() {
             @Override
             public void onChanged(List<ExtractTextEntity> extractTextEntities) {
                 if (extractTextEntities.size() > 0) {
@@ -82,6 +82,23 @@ public class ExtractTextHistoryFragment extends Fragment {
         binding = null;
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        if (getList() != null) {
+//            if (getList().size() > 0) {
+//                list = getList();
+//                adapter.setEntities(list);
+//                if (isFirstTime) { // here we are ensuring that only the first time the user visits this screen
+//                    // the animation will be played
+//                    binding.rv.startLayoutAnimation();
+//                    isFirstTime = false;
+//                }
+//            }
+//        }
+//    }
+
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -98,4 +115,8 @@ public class ExtractTextHistoryFragment extends Fragment {
             }
         }
     };
+
+    public List<ExtractTextEntity> getList(){
+        return Core.extractTextHistoryViewModel.getAll().getValue();
+    }
 }

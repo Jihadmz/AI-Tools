@@ -104,7 +104,7 @@ public class ExtractTextFragment extends Fragment {
                 //  Here we are making sure that when the user have chose an image, then the entity will be added
                 //  not if the user clicked on one of the entities history
                 if (Core.extractTextViewModel.chosenImage.getValue() != null)
-                    Core.extractTextViewModel.addEntity(binding.et.getText().toString());
+                    Core.extractTextViewModel.addEntity(binding.et.getText().toString(), Core.extractTextViewModel.chosenImage.getValue());
             }
         };
         Core.extractTextViewModel.extractedText.observe(requireActivity(), extractedTextObserver);

@@ -10,9 +10,11 @@ public class ExtractTextEntity {
 
     @PrimaryKey(autoGenerate = true) int id = 0;
     private String text;
+    private Bitmap image;
 
-    public ExtractTextEntity(String text){
+    public ExtractTextEntity(String text, Bitmap image){
         this.text = text;
+        this.image = image;
     }
 
     public int getId() {
@@ -29,5 +31,13 @@ public class ExtractTextEntity {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

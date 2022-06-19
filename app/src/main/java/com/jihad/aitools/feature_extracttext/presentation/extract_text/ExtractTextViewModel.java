@@ -79,8 +79,8 @@ public class ExtractTextViewModel extends AndroidViewModel {
             chosenImage=  _chosenImage;
     }
 
-    public void addEntity(String text) {
-        repo.add(new ExtractTextEntity(text));
+    public void addEntity(String text, Bitmap image) {
+        repo.add(new ExtractTextEntity(text, image));
     }
 
 }
