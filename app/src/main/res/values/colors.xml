@@ -8,4 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#D70404</color>
+
+<!--                 My colors   -->
+    <color name="midnight_blue">#000050</color>
+    <color name="violet_pink">#C18ACA</color>
+    <color name="violet_blue">#7075DC</color>
+    <color name="fluorescent_blue">#00E5E0</color>
+    <color name="state_blue">#7158DC</color>
+    <color name="darkest_blue">#0000B3</color>
+    <color name="dark_blue">#0005C6</color>
+    <color name="light_blue">#0000F5</color>
+    <color name="lightest_blue">#004DFC</color>
 </resources>

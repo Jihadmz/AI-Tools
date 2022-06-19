@@ -16,15 +16,15 @@
        android:layout_marginTop="10dp"
        >
 
-       <ImageView
-           android:id="@+id/iv_textFromImage"
-           android:layout_width="100dp"
-           android:layout_height="100dp"
+       <com.airbnb.lottie.LottieAnimationView
+           android:id="@+id/la_et"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
            android:layout_rowWeight="1"
-           android:src="@drawable/text_from_image"
-           android:layout_marginStart="20dp"
-           android:contentDescription="@string/TextExtractionImage" />
+           app:lottie_rawRes="@raw/lottie_et"
+           app:lottie_autoPlay="true"
+           app:lottie_loop="true"
+           />
 
    </GridLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

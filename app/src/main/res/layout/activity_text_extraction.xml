@@ -14,8 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/tabs"
-        app:tabSelectedTextColor="@color/red"
-        app:tabIndicatorColor="@color/red">
+        >
 
     </com.google.android.material.tabs.TabLayout>
 

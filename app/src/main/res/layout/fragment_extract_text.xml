@@ -16,7 +16,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
-        app:lottie_rawRes="@raw/lottie_text"
+        app:lottie_rawRes="@raw/lottie_et"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         />

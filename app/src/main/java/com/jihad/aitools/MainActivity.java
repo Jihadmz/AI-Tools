@@ -1,10 +1,12 @@
 package com.jihad.aitools;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Messenger;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jihad.aitools.databinding.ActivityMainBinding;
 import com.jihad.aitools.feature_extracttext.presentation.TextExtractionActivity;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.ivTextFromImage.setOnClickListener(new View.OnClickListener() {
+        binding.laEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TextExtractionActivity.class);

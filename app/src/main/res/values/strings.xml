@@ -10,4 +10,6 @@
     <string name="copy">Copy</string>
     <string name="TextCopied">Text copied into clipboard</string>
     <string name="CouldntExtractText">Couldn\'t extract text</string>
+    <string name="Delete">Delete</string>
+    <string name="DeleteAllExtractTextHistory">Are you sure you want to delete all extracted text history</string>
 </resources>
