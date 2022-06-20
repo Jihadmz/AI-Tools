@@ -23,6 +23,7 @@
         <item name="tabSelectedTextColor">?attr/colorPrimary</item>
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="cardViewStyle">@style/cardStyle</item>
+        <item name="android:dialogTheme">@style/dialogStyle</item>
     </style>
 
 
@@ -33,6 +34,17 @@
 
     <style name="textViewStyleInCardView" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="dialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:windowBackground">@drawable/dialog_bg</item>
+    </style>
+
+    <style name="dialogAnimations">
+        <item name="android:windowEnterAnimation">@anim/from_top</item>
+        <item name="android:windowExitAnimation">@anim/to_bottom</item>
     </style>
 
 </resources>

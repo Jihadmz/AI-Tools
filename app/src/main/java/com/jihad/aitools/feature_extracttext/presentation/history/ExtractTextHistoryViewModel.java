@@ -16,26 +16,23 @@ import java.util.List;
 public class ExtractTextHistoryViewModel extends AndroidViewModel {
 
     private final ExtractTextRepoImpl repo;
-//    private LiveData<List<ExtractTextEntity>> extractTextEntity;
+    public LiveData<List<ExtractTextEntity>> list;
 
     public ExtractTextHistoryViewModel(Application application) {
         super(application);
         repo = new ExtractTextRepoImpl(application);
-//        extractTextEntity = repo.getAll();
+        list = repo.getAll();
     }
 
-//    public LiveData<List<ExtractTextEntity>> getExtractTextEntityList() {
-//        if (extractTextEntity == null) {
-//            extractTextEntity = new MutableLiveData<>(new ArrayList<>());
-//        }
-//        return extractTextEntity;
-//    }
 
     public void deleteEntity(ExtractTextEntity entity){
         repo.delete(entity);
     }
 
-    public LiveData<List<ExtractTextEntity>> getAll(){
-        return repo.getAll();
+
+    public void deleteAll(){
+        if (list.getValue() != null)
+            list.getValue().clear();
+        repo.clear();
     }
 }

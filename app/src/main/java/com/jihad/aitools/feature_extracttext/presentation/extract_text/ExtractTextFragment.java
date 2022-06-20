@@ -49,8 +49,6 @@ public class ExtractTextFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentExtractTextBinding.bind(view);
 
-        binding.laCopy.setEnabled(false);
-
         /*                       Listeners                   */
         binding.ml.setTransitionListener(new MotionLayout.TransitionListener() {
             @Override
@@ -82,7 +80,7 @@ public class ExtractTextFragment extends Fragment {
             }
         });
 
-        binding.laCopy.setOnClickListener(new View.OnClickListener() {
+        binding.ivCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clipboardManager = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -97,8 +95,7 @@ public class ExtractTextFragment extends Fragment {
         final Observer<String> extractedTextObserver = new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                binding.laCopy.setEnabled(true);
-                binding.laCopy.playAnimation();
+                binding.ivCopy.setVisibility(View.VISIBLE);
                 binding.et.setText(s);
 
                 //  Here we are making sure that when the user have chose an image, then the entity will be added

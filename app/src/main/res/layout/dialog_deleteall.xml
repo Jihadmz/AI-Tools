@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <TextView
         android:id="@+id/tv"
@@ -13,11 +14,33 @@
         android:paddingTop="10dp"/>
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/la"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:lottie_rawRes="@raw/lottie_delete"
         android:layout_below="@+id/tv"
         android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"/>
+        android:paddingTop="20dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+    <ImageView
+        android:id="@+id/iv_accept"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/la"
+        android:src="@drawable/check"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:id="@+id/iv_reject"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/close"
+        android:layout_below="@+id/la"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

@@ -17,6 +17,9 @@ public interface ExtractTextDao {
     @Query("select * from extracttext")
     LiveData<List<ExtractTextEntity>> getAll();
 
+    @Query("delete from extracttext")
+    void clear();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void add(ExtractTextEntity entity);
 

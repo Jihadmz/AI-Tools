@@ -26,6 +26,11 @@ public class ExtractTextRepoImpl implements ExtractTextDao{
     }
 
     @Override
+    public void clear() {
+       new DeleteAll(dao).execute();
+    }
+
+    @Override
     public void add(ExtractTextEntity entity) {
         new AddExtractText(dao).execute(entity);
     }
@@ -66,6 +71,23 @@ public class ExtractTextRepoImpl implements ExtractTextDao{
         @Override
         protected Void doInBackground(ExtractTextEntity... extractTextEntities) {
             dao.delete(extractTextEntities[0]);
+            return null;
+        }
+    }
+
+    /**
+     * Background delete all entities
+     */
+    private static class DeleteAll extends AsyncTask<Void, Void, Void>{
+        private final ExtractTextDao dao;
+
+        private DeleteAll(ExtractTextDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dao.clear();
             return null;
         }
     }

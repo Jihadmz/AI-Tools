@@ -29,21 +29,15 @@ import java.util.List;
 public class ExtractTextHistoryFragment extends Fragment {
 
     private FragmentExtractTextHistoryBinding binding;
-    private ExtractTextHistoryAdapter adapter;
-    private List<ExtractTextEntity> list;
     private boolean isFirstTime;
+    public static ExtractTextHistoryFragment INSTANCE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         isFirstTime = true;
-        list = new ArrayList<>();
-        TabLayout tabLayout = (TabLayout) requireActivity().findViewById(R.id.tl);
-        adapter = new ExtractTextHistoryAdapter(
-                requireContext(),
-                list,
-                tabLayout);
+        INSTANCE = this;
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_extract_text_history, container, false);
@@ -55,24 +49,24 @@ public class ExtractTextHistoryFragment extends Fragment {
         binding = FragmentExtractTextHistoryBinding.bind(view);
 
         binding.rv.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.rv.setAdapter(adapter);
+        binding.rv.setAdapter(Core.extractTextHistoryAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rv);
 
-        Core.extractTextHistoryViewModel.getAll().observe(requireActivity(), new Observer<List<ExtractTextEntity>>() {
-            @Override
-            public void onChanged(List<ExtractTextEntity> extractTextEntities) {
-                if (extractTextEntities.size() > 0) {
-                    list = extractTextEntities;
-                    adapter.setEntities(list);
-                    if (isFirstTime) { // here we are ensuring that only the first time the user visits this screen
-                        // the animation will be played
-                        binding.rv.startLayoutAnimation();
-                        isFirstTime = false;
-                    }
-                }
-            }
-        });
+        if (isFirstTime) { // here we are ensuring that only the first time the user visits this screen
+            // the animation will be played
+            binding.rv.startLayoutAnimation();
+            isFirstTime = false;
+        }
+
+        makeEmptyBoxVisible();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        makeEmptyBoxVisible();
     }
 
     @Override
@@ -81,23 +75,6 @@ public class ExtractTextHistoryFragment extends Fragment {
 
         binding = null;
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        if (getList() != null) {
-//            if (getList().size() > 0) {
-//                list = getList();
-//                adapter.setEntities(list);
-//                if (isFirstTime) { // here we are ensuring that only the first time the user visits this screen
-//                    // the animation will be played
-//                    binding.rv.startLayoutAnimation();
-//                    isFirstTime = false;
-//                }
-//            }
-//        }
-//    }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
@@ -108,7 +85,7 @@ public class ExtractTextHistoryFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            ExtractTextEntity entity = list.get(position);
+            ExtractTextEntity entity = Core.list.get(position);
 
             if (direction == ItemTouchHelper.LEFT){
                 Core.extractTextHistoryViewModel.deleteEntity(entity);
@@ -116,7 +93,11 @@ public class ExtractTextHistoryFragment extends Fragment {
         }
     };
 
-    public List<ExtractTextEntity> getList(){
-        return Core.extractTextHistoryViewModel.getAll().getValue();
+    public void makeEmptyBoxVisible(){
+        if (Core.list.size() > 0)
+            binding.laEmptyBox.setVisibility(View.INVISIBLE);
+        else
+            binding.laEmptyBox.setVisibility(View.VISIBLE);
+
     }
 }
