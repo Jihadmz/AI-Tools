@@ -19,17 +19,13 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.mlkit.vision.common.internal.ImageUtils;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.FragmentExtractTextBinding;
-import com.jihad.aitools.feature_extracttext.Core;
-import com.jihad.aitools.feature_extracttext.domain.model.ExtractTextEntity;
-import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryViewModel;
+import com.jihad.aitools.feature_extracttext.CoreET;
 
 import java.io.IOException;
-import java.util.List;
 
 public class ExtractTextFragment extends Fragment {
 
@@ -100,11 +96,11 @@ public class ExtractTextFragment extends Fragment {
 
                 //  Here we are making sure that when the user have chose an image, then the entity will be added
                 //  not if the user clicked on one of the entities history
-                if (Core.extractTextViewModel.chosenImage.getValue() != null)
-                    Core.extractTextViewModel.addEntity(binding.et.getText().toString(), Core.extractTextViewModel.chosenImage.getValue());
+                if (CoreET.shouldAddEntity)
+                    CoreET.extractTextViewModel.addEntity(binding.et.getText().toString(), CoreET.extractTextViewModel.chosenImage.getValue());
             }
         };
-        Core.extractTextViewModel.extractedText.observe(requireActivity(), extractedTextObserver);
+        CoreET.extractTextViewModel.extractedText.observe(requireActivity(), extractedTextObserver);
 
         final Observer<Bitmap> chosenImageObserver = new Observer<Bitmap>() {
             @Override
@@ -112,7 +108,7 @@ public class ExtractTextFragment extends Fragment {
                 binding.laTempImage.setImageBitmap(bitmap);
             }
         };
-        Core.extractTextViewModel.chosenImage.observe(requireActivity(), chosenImageObserver);
+        CoreET.extractTextViewModel.chosenImage.observe(requireActivity(), chosenImageObserver);
 
     } // end of on viewCreated
 
@@ -126,8 +122,9 @@ public class ExtractTextFragment extends Fragment {
                       if (result != null) { // if the user actually chose an image
                           try {
                              Bitmap bm = ImageUtils.getInstance().zza(requireContext().getContentResolver(), result);
-                              Core.extractTextViewModel.setChosenImage(bm, getContext().getContentResolver());
-                              Core.extractTextViewModel.extractText(result, requireContext());
+                              CoreET.shouldAddEntity = true;
+                              CoreET.extractTextViewModel.setChosenImage(bm, getContext().getContentResolver());
+                              CoreET.extractTextViewModel.extractText(result, requireContext());
                           } catch (IOException e) {
                               e.printStackTrace();
                           }

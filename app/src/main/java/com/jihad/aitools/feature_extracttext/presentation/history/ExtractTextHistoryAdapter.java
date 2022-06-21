@@ -1,12 +1,9 @@
 package com.jihad.aitools.feature_extracttext.presentation.history;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -15,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.jihad.aitools.databinding.ListitemExtracttexthistoryBinding;
-import com.jihad.aitools.feature_extracttext.Core;
+import com.jihad.aitools.feature_extracttext.CoreET;
 import com.jihad.aitools.feature_extracttext.domain.model.ExtractTextEntity;
-import com.jihad.aitools.feature_extracttext.presentation.extract_text.ExtractTextViewModel;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class ExtractTextHistoryAdapter extends RecyclerView.Adapter<ExtractTextHistoryAdapter.ViewHolder> {
@@ -34,11 +29,6 @@ public class ExtractTextHistoryAdapter extends RecyclerView.Adapter<ExtractTextH
         this.entities = entities;
         this.context = context;
         this.tabLayout = tabLayout;
-    }
-
-    public ExtractTextHistoryAdapter(List<ExtractTextEntity> entities, Context context) {
-        this.entities = entities;
-        this.context = context;
     }
 
     @NonNull
@@ -66,8 +56,9 @@ public class ExtractTextHistoryAdapter extends RecyclerView.Adapter<ExtractTextH
             @Override
             public void onClick(View view) {
                 tabLayout.selectTab(tabLayout.getTabAt(0), true);
-                Core.extractTextViewModel.setExtractedText(holder.binding.tv.getText().toString());
-                Core.extractTextViewModel.setChosenImage(entity.getImage(), context.getContentResolver());
+                CoreET.shouldAddEntity = false;
+                CoreET.extractTextViewModel.setExtractedText(holder.binding.tv.getText().toString());
+                CoreET.extractTextViewModel.setChosenImage(entity.getImage(), context.getContentResolver());
             }
         });
     }

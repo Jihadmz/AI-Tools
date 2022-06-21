@@ -1,31 +1,35 @@
 package com.jihad.aitools.feature_extracttext.presentation;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Dialog;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.jihad.aitools.Core;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityTextExtractionBinding;
-import com.jihad.aitools.feature_extracttext.Core;
+import com.jihad.aitools.feature_extracttext.CoreET;
 import com.jihad.aitools.feature_extracttext.domain.model.ExtractTextEntity;
 import com.jihad.aitools.feature_extracttext.presentation.components.DialogDeleteAll;
 import com.jihad.aitools.feature_extracttext.presentation.extract_text.ExtractTextViewModel;
 import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryAdapter;
-import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryFragment;
 import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryViewModel;
 
 import java.util.ArrayList;
@@ -35,16 +39,17 @@ public class TextExtractionActivity extends AppCompatActivity {
 
     private ActivityTextExtractionBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityTextExtractionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Core.extractTextViewModel = new ViewModelProvider(this).get(ExtractTextViewModel.class);
-        Core.extractTextHistoryViewModel = new ViewModelProvider(this).get(ExtractTextHistoryViewModel.class);
-        Core.list = new ArrayList<>();
-        Core.extractTextHistoryAdapter = new ExtractTextHistoryAdapter(this, Core.list, binding.tl);
+        CoreET.extractTextViewModel = new ViewModelProvider(this).get(ExtractTextViewModel.class);
+        CoreET.extractTextHistoryViewModel = new ViewModelProvider(this).get(ExtractTextHistoryViewModel.class);
+        CoreET.list = new ArrayList<>();
+        CoreET.extractTextHistoryAdapter = new ExtractTextHistoryAdapter(this, CoreET.list, binding.tl);
 
         //  Setting up actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -54,14 +59,15 @@ public class TextExtractionActivity extends AppCompatActivity {
 
         settingTabs();
 
-        Core.extractTextHistoryViewModel.list.observe(this, new Observer<List<ExtractTextEntity>>() {
+        CoreET.extractTextHistoryViewModel.list.observe(this, new Observer<List<ExtractTextEntity>>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(List<ExtractTextEntity> extractTextEntities) {
                 if (extractTextEntities.size() > 0){
-                    Core.list = extractTextEntities;
-                    Core.extractTextHistoryAdapter.setEntities(Core.list);
+                    CoreET.list = extractTextEntities;
+                    CoreET.extractTextHistoryAdapter.setEntities(CoreET.list);
                 }else{
-                    Core.extractTextHistoryAdapter.notifyDataSetChanged();
+                    CoreET.extractTextHistoryAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -75,8 +81,8 @@ public class TextExtractionActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        Core.extractTextHistoryViewModel = null;
-        Core.extractTextViewModel = null;
+        CoreET.extractTextHistoryViewModel = null;
+        CoreET.extractTextViewModel = null;
         binding = null;
     }
 
@@ -94,7 +100,7 @@ public class TextExtractionActivity extends AppCompatActivity {
             if (binding.tl.getSelectedTabPosition() == 0)
                 binding.tl.selectTab(binding.tl.getTabAt(1));
 
-            if (Core.list.size() > 0) { // if there is entities
+            if (CoreET.list.size() > 0) { // if there is entities
                 DialogDeleteAll dialogDeleteAll = new DialogDeleteAll(TextExtractionActivity.this);
                 dialogDeleteAll.create();
 
@@ -107,7 +113,26 @@ public class TextExtractionActivity extends AppCompatActivity {
                 }, 100);
             }
         }
+        else if (item.getItemId() == R.id.mu_camera){
+            //  if permission is granted open the camera app, else request it
+            if (Core.checkPermission(this,Manifest.permission.CAMERA, 1)){
+                Core.startAnAction(this, MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA, null, null);
+            }
+        }
             return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1 && grantResults.length > 0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, getString(R.string.PermissionGranted), Toast.LENGTH_SHORT).show();
+                Core.startAnAction(this, MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA, null, null);
+            }
+        }
     }
 
     private void settingTabs(){

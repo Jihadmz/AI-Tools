@@ -3,9 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/mu_camera"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/camera"
+        android:title="@string/Delete"
+        />
+
+    <item
         android:id="@+id/mu_deleteAll"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/delete_white_24"
+        android:icon="@drawable/delete"
         android:title="@string/Delete"
         />
 

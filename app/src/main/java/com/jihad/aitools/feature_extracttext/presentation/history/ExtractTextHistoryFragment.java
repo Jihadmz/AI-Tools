@@ -1,30 +1,21 @@
 package com.jihad.aitools.feature_extracttext.presentation.history;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.tabs.TabLayout;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.FragmentExtractTextHistoryBinding;
-import com.jihad.aitools.feature_extracttext.Core;
+import com.jihad.aitools.feature_extracttext.CoreET;
 import com.jihad.aitools.feature_extracttext.domain.model.ExtractTextEntity;
-import com.jihad.aitools.feature_extracttext.presentation.extract_text.ExtractTextViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExtractTextHistoryFragment extends Fragment {
 
@@ -49,7 +40,7 @@ public class ExtractTextHistoryFragment extends Fragment {
         binding = FragmentExtractTextHistoryBinding.bind(view);
 
         binding.rv.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.rv.setAdapter(Core.extractTextHistoryAdapter);
+        binding.rv.setAdapter(CoreET.extractTextHistoryAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.rv);
 
@@ -85,16 +76,16 @@ public class ExtractTextHistoryFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            ExtractTextEntity entity = Core.list.get(position);
+            ExtractTextEntity entity = CoreET.list.get(position);
 
             if (direction == ItemTouchHelper.LEFT){
-                Core.extractTextHistoryViewModel.deleteEntity(entity);
+                CoreET.extractTextHistoryViewModel.deleteEntity(entity);
             }
         }
     };
 
     public void makeEmptyBoxVisible(){
-        if (Core.list.size() > 0)
+        if (CoreET.list.size() > 0)
             binding.laEmptyBox.setVisibility(View.INVISIBLE);
         else
             binding.laEmptyBox.setVisibility(View.VISIBLE);

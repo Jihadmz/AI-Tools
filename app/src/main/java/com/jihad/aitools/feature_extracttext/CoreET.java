@@ -7,10 +7,12 @@ import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHis
 
 import java.util.List;
 
-public class Core {
+public class CoreET {
 
     public static ExtractTextViewModel extractTextViewModel;
     public static ExtractTextHistoryViewModel extractTextHistoryViewModel;
     public static List<ExtractTextEntity> list;
     public static ExtractTextHistoryAdapter extractTextHistoryAdapter;
+    public static boolean shouldAddEntity;
+
 }

@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/fragment_extract_text_history.xml" value="0.1816123188405797" />
         <entry key="app/src/main/res/layout/listitem_extracttexthistory.xml" value="0.16113744075829384" />
         <entry key="app/src/main/res/menu/extract_text.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.19270833333333334" />
       </map>
     </option>
   </component>

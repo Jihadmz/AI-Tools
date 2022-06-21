@@ -2,7 +2,6 @@ package com.jihad.aitools.feature_extracttext.presentation.components;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -10,7 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.DialogDeleteallBinding;
-import com.jihad.aitools.feature_extracttext.Core;
+import com.jihad.aitools.feature_extracttext.CoreET;
 import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryFragment;
 
 public class DialogDeleteAll extends Dialog {
@@ -32,7 +31,7 @@ public class DialogDeleteAll extends Dialog {
         binding.ivAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Core.extractTextHistoryViewModel.deleteAll();
+                CoreET.extractTextHistoryViewModel.deleteAll();
                 dismiss();
                 //  to make the empty box visible
                 ExtractTextHistoryFragment.INSTANCE.makeEmptyBoxVisible();

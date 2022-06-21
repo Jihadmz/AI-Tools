@@ -12,4 +12,5 @@
     <string name="CouldntExtractText">Couldn\'t extract text</string>
     <string name="Delete">Delete</string>
     <string name="DeleteAllExtractTextHistory">Are you sure you want to delete all extracted text history</string>
+    <string name="PermissionGranted">Permission Granted</string>
 </resources>
