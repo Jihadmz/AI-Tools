@@ -21,7 +21,7 @@ public class ExtractTextHistoryAdapter extends RecyclerView.Adapter<ExtractTextH
 
     private List<ExtractTextEntity> entities;
     private final Context context;
-    private TabLayout tabLayout;
+    private final TabLayout tabLayout;
 
     public ExtractTextHistoryAdapter(Context context,
                                      List<ExtractTextEntity> entities,

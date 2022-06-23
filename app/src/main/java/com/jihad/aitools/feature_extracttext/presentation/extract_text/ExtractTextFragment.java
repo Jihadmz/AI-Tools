@@ -92,6 +92,7 @@ public class ExtractTextFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 binding.ivCopy.setVisibility(View.VISIBLE);
+                binding.ivTranslate.setVisibility(View.VISIBLE);
                 binding.et.setText(s);
 
                 //  Here we are making sure that when the user have chose an image, then the entity will be added
