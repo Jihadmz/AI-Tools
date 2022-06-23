@@ -13,4 +13,7 @@
     <string name="Delete">Delete</string>
     <string name="DeleteAllExtractTextHistory">Are you sure you want to delete all extracted text history</string>
     <string name="PermissionGranted">Permission Granted</string>
+    <string name="Translation">Translation</string>
+    <string name="Text">Text</string>
+    <string name="TranslateText">Translate Text</string>
 </resources>

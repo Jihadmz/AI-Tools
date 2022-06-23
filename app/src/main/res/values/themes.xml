@@ -24,6 +24,7 @@
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="cardViewStyle">@style/cardStyle</item>
         <item name="android:dialogTheme">@style/dialogStyle</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
 

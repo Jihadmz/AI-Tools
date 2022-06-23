@@ -44,6 +44,12 @@ dependencies {
     //  Ml Kit text recognition
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'
 
+    //  Ml kit text language identification
+    implementation 'com.google.mlkit:language-id:17.0.3'
+
+    //  Ml kit text language translatiom
+    implementation 'com.google.mlkit:translate:17.0.0'
+
     //  Lottie animations
     implementation "com.airbnb.android:lottie-compose:5.0.3"
 

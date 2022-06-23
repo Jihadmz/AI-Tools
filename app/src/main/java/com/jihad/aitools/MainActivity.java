@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jihad.aitools.databinding.ActivityMainBinding;
 import com.jihad.aitools.feature_extracttext.presentation.TextExtractionActivity;
+import com.jihad.aitools.feature_translatetext.presentation.TranslateTextActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TextExtractionActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        binding.laTranslate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), TranslateTextActivity.class));
             }
         });
     }
