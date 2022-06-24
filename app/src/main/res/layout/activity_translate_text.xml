@@ -15,6 +15,7 @@
         >
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -30,16 +31,22 @@
                     android:id="@+id/et_textTranslate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_toStartOf="@+id/iv_paste"
                     android:background="@null"
                     android:hint="@string/Text"
-                    android:inputType="text" />
+                    android:inputType="textMultiLine"
+                    android:overScrollMode="ifContentScrolls"
+                     />
 
                 <ImageView
                     android:id="@+id/iv_paste"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
@@ -66,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="ENGLISH"
-                    />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tv_chosenId"
@@ -74,7 +81,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
-                    android:text="FRENCH" />
+                    android:text="FRENCH"
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
 

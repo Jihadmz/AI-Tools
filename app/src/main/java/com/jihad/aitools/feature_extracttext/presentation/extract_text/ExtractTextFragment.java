@@ -3,6 +3,7 @@ package com.jihad.aitools.feature_extracttext.presentation.extract_text;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import com.google.mlkit.vision.common.internal.ImageUtils;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.FragmentExtractTextBinding;
 import com.jihad.aitools.feature_extracttext.CoreET;
+import com.jihad.aitools.feature_translatetext.presentation.TranslateTextActivity;
 
 import java.io.IOException;
 
@@ -83,6 +85,15 @@ public class ExtractTextFragment extends Fragment {
                 ClipData clipData = ClipData.newPlainText("",binding.et.getText().toString());
                 clipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(requireContext(), getString(R.string.TextCopied), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.ivTranslate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), TranslateTextActivity.class);
+                intent.putExtra("ExtractedText", binding.et.getText().toString());
+                startActivity(intent);
             }
         });
 

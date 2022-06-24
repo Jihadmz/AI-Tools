@@ -13,7 +13,7 @@
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        android:layout_marginTop="10dp"
-       android:orientation="horizontal"
+       android:orientation="vertical"
        >
 
        <com.airbnb.lottie.LottieAnimationView
@@ -21,18 +21,18 @@
            app:lottie_rawRes="@raw/lottie_et"
            app:lottie_autoPlay="true"
            app:lottie_loop="true"
-            android:layout_height="match_parent"
-           android:layout_width="0dp"
+           android:layout_height="0dp"
+           android:layout_width="match_parent"
            android:layout_weight="1"
            />
 
        <com.airbnb.lottie.LottieAnimationView
            android:id="@+id/la_translate"
-           app:lottie_rawRes="@raw/translators"
+           app:lottie_rawRes="@raw/translate"
            app:lottie_autoPlay="true"
            app:lottie_loop="true"
-           android:layout_height="match_parent"
-           android:layout_width="0dp"
+           android:layout_height="0dp"
+           android:layout_width="match_parent"
            android:layout_weight="1"/>
 
    </LinearLayout>

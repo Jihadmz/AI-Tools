@@ -1,9 +1,14 @@
 package com.jihad.aitools.feature_translatetext.presentation;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +32,7 @@ import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityTranslateTextBinding;
+import com.jihad.aitools.feature_extracttext.CoreET;
 import com.jihad.aitools.feature_translatetext.CoreTranslateText;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogDownloading;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogLanguageChooser;
@@ -34,6 +40,7 @@ import com.jihad.aitools.feature_translatetext.presentation.components.DialogLan
 public class TranslateTextActivity extends AppCompatActivity {
 
     private ActivityTranslateTextBinding binding;
+    private ClipboardManager clipboardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,8 @@ public class TranslateTextActivity extends AppCompatActivity {
         CoreTranslateText.application = getApplication();
         CoreTranslateText.viewModel = new ViewModelProvider(this).get(ViewModelTranslateText.class);
         CoreTranslateText.modelManager = RemoteModelManager.getInstance();
+
+        clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
         //  Setting up actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -139,8 +148,36 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        binding.ivPaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pasteFromClipboard();
+            }
+        });
+
+        binding.cv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.etTextTranslate.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            }
+        });
+
+        if (getIntent().hasExtra("ExtractedText")) { // user coming from Extracted text fragment with the text being copied
+            String text = getIntent().getStringExtra("ExtractedText");
+            binding.etTextTranslate.setText(text);
+        }
+
         downloadEnglishLanguageModel();
 
+    }
+
+    private void pasteFromClipboard(){
+        ClipData clipData = clipboardManager.getPrimaryClip();
+        ClipData.Item item = clipData.getItemAt(0);
+        binding.etTextTranslate.setText(binding.etTextTranslate.getText().toString() + item.getText().toString());
+        binding.etTextTranslate.setSelection(binding.etTextTranslate.getText().length());
     }
 
     private String gettingSourceLanguage(String languageCode) {

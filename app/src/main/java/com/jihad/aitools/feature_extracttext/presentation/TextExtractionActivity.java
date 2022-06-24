@@ -83,6 +83,8 @@ public class TextExtractionActivity extends AppCompatActivity {
 
         CoreET.extractTextHistoryViewModel = null;
         CoreET.extractTextViewModel = null;
+        CoreET.list = null;
+        CoreET.extractTextHistoryAdapter = null;
         binding = null;
     }
 
