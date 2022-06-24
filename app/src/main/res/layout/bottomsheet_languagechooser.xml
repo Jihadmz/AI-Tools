@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bottomsheet_bg">
+
+    <RelativeLayout
+        android:id="@+id/rl_usa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/iv_usa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/unitedstates"/>
+
+        <TextView
+            android:id="@+id/tv_usa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/English"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/iv_usa"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/iv_download_english"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/download"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_french"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/iv_french"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/france"/>
+
+        <TextView
+            android:id="@+id/tv_french"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/French"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/iv_french"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/iv_download_french"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/download"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_germany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/iv_germany"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/germany"/>
+
+        <TextView
+            android:id="@+id/tv_germany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Germany"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/iv_germany"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/iv_download_germany"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/download"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_saudiArabia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/iv_saudiArabia"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/saudiarabia"/>
+
+        <TextView
+            android:id="@+id/tv_saudiArabia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Arabic"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/iv_saudiArabia"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/iv_download_saudi"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/download"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

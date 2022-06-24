@@ -16,4 +16,10 @@
     <string name="Translation">Translation</string>
     <string name="Text">Text</string>
     <string name="TranslateText">Translate Text</string>
+    <string name="English">ENGLISH</string>
+    <string name="French">FRENCH</string>
+    <string name="Germany">GERMANY</string>
+    <string name="Arabic">ARABIC</string>
+    <string name="Downloading">Downloading, please wait ...</string>
+    <string name="DownloadItFirst">Download it before using it</string>
 </resources>
