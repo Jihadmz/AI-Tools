@@ -103,7 +103,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         binding.tvChosenId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogLanguageChooser dialogLanguageChooser = new DialogLanguageChooser(view.getContext());
+                DialogLanguageChooser dialogLanguageChooser = new DialogLanguageChooser(view.getContext(), binding.etTextTranslate.getText().toString());
                 dialogLanguageChooser.create();
                 dialogLanguageChooser.show();
             }
@@ -133,7 +133,7 @@ public class TranslateTextActivity extends AppCompatActivity {
                                     public void onSuccess(@Nullable String languageCode) {
                                         if (!languageCode.equals("und")) {
                                             CoreTranslateText.viewModel.setSourceLanguageCode(languageCode);
-                                            translating(languageCode, editable.toString());
+                                            CoreTranslateText.translating(languageCode, editable.toString(), binding.tvChosenId.getText().toString());
                                         }
                                     }
                                 })
@@ -152,6 +152,13 @@ public class TranslateTextActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 pasteFromClipboard();
+            }
+        });
+
+        binding.ivClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.etTextTranslate.getText().clear();
             }
         });
 
@@ -195,21 +202,6 @@ public class TranslateTextActivity extends AppCompatActivity {
         }
     }
 
-    private String gettingChosenLanguageCode() {
-        switch (binding.tvChosenId.getText().toString()) {
-            case "ENGLISH":
-                return "en";
-            case "FRENCH":
-                return "fr";
-            case "GERMANY":
-                return "de";
-            case "ARABIC":
-                return "ar";
-            default:
-                return "unk";
-        }
-    }
-
     private void downloadEnglishLanguageModel() {
         // Download a model.
         TranslateRemoteModel englishModel =
@@ -239,36 +231,6 @@ public class TranslateTextActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-    }
-
-    private void translating(String languageCode, String text) {
-
-        TranslatorOptions options =
-                new TranslatorOptions.Builder()
-                        .setSourceLanguage(languageCode)
-                        .setTargetLanguage(gettingChosenLanguageCode())
-                        .build();
-        final Translator translator = Translation.getClient(options);
-
-        translator.translate(text)
-                .addOnSuccessListener(
-                        new OnSuccessListener<String>() {
-                            @Override
-                            public void onSuccess(@NonNull String translatedText) {
-                                // Translation successful.
-                                CoreTranslateText.viewModel.setTranslatedText(translatedText);
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Error.
-                                // ...
-                            }
-                        });
     }
 
 

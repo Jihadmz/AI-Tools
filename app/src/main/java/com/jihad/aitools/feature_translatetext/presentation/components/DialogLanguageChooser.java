@@ -31,10 +31,12 @@ public class DialogLanguageChooser extends Dialog {
     private boolean isGermanyAvailable;
     private boolean isFrenchAvailable;
     private boolean isArabicAvailable;
+    private final String text;
 
-    public DialogLanguageChooser(@NonNull Context context) {
+    public DialogLanguageChooser(@NonNull Context context, String text) {
         super(context);
         this.context = context;
+        this.text = text;
     }
 
     @Override
@@ -59,6 +61,8 @@ public class DialogLanguageChooser extends Dialog {
                     Toast.makeText(context, context.getString(R.string.DownloadItFirst), Toast.LENGTH_SHORT).show();
                 else {
                     CoreTranslateText.viewModel.setChosenLanguage("ENGLISH");
+                    CoreTranslateText.translating(CoreTranslateText.viewModel.getSourceLanguageId().getValue(),
+                            text, "ENGLISH");
                     dismiss();
                 }
             }
@@ -71,6 +75,8 @@ public class DialogLanguageChooser extends Dialog {
                     Toast.makeText(context, context.getString(R.string.DownloadItFirst), Toast.LENGTH_SHORT).show();
                 else {
                     CoreTranslateText.viewModel.setChosenLanguage("FRENCH");
+                    CoreTranslateText.translating(CoreTranslateText.viewModel.getSourceLanguageId().getValue(),
+                            text, "FRENCH");
                     dismiss();
                 }
             }
@@ -83,6 +89,8 @@ public class DialogLanguageChooser extends Dialog {
                     Toast.makeText(context, context.getString(R.string.DownloadItFirst), Toast.LENGTH_SHORT).show();
                 else {
                     CoreTranslateText.viewModel.setChosenLanguage("GERMANY");
+                    CoreTranslateText.translating(CoreTranslateText.viewModel.getSourceLanguageId().getValue(),
+                            text, "GERMANY");
                     dismiss();
                 }
             }
@@ -95,6 +103,8 @@ public class DialogLanguageChooser extends Dialog {
                     Toast.makeText(context, context.getString(R.string.DownloadItFirst), Toast.LENGTH_SHORT).show();
                 else {
                     CoreTranslateText.viewModel.setChosenLanguage("ARABIC");
+                    CoreTranslateText.translating(CoreTranslateText.viewModel.getSourceLanguageId().getValue(),
+                            text, "ARABIC");
                     dismiss();
                 }
             }

@@ -44,6 +44,16 @@
                      />
 
                 <ImageView
+                    android:id="@+id/iv_clear"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/close"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    />
+
+                <ImageView
                     android:id="@+id/iv_paste"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -51,7 +61,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/paste"
-                     />
+                    android:layout_below="@+id/iv_clear"/>
                 </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
