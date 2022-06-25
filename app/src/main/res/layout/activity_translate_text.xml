@@ -49,7 +49,7 @@
                     android:layout_height="40dp"
                     android:src="@drawable/close"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     />
 
@@ -57,11 +57,21 @@
                     android:id="@+id/iv_paste"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_below="@+id/iv_clear"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/paste"
-                    android:layout_below="@+id/iv_clear"/>
+                    android:src="@drawable/paste" />
+
+                <ImageView
+                    android:id="@+id/iv_speak1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/iv_paste"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/speakers" />
                 </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -104,7 +114,7 @@
             android:layout_weight="1"
             >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg"
@@ -115,9 +125,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/Translation"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:layout_toStartOf="@+id/iv_copy"
+                android:overScrollMode="ifContentScrolls"/>
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_copy"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/copy" />
+
+                <ImageView
+                    android:id="@+id/iv_speak2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/speakers"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/iv_copy"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"/>
+
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

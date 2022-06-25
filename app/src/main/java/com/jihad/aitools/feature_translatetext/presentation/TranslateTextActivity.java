@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -37,10 +38,14 @@ import com.jihad.aitools.feature_translatetext.CoreTranslateText;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogDownloading;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogLanguageChooser;
 
+import java.util.Locale;
+
 public class TranslateTextActivity extends AppCompatActivity {
 
     private ActivityTranslateTextBinding binding;
     private ClipboardManager clipboardManager;
+    private TextToSpeech textToSpeech;
+    private TextToSpeech textToSpeech1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,18 @@ public class TranslateTextActivity extends AppCompatActivity {
         CoreTranslateText.modelManager = RemoteModelManager.getInstance();
 
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        textToSpeech = new TextToSpeech(TranslateTextActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                textToSpeech.setLanguage(Locale.ENGLISH);
+            }
+        });
+        textToSpeech1 = new TextToSpeech(TranslateTextActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                gettingLocalLanguageFromLanguage(binding.tvChosenId.getText().toString());
+            }
+        });
 
         //  Setting up actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -78,6 +95,8 @@ public class TranslateTextActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 binding.tvChosenId.setText(s);
+
+                gettingLocalLanguageFromLanguage(s);
             }
         });
 
@@ -85,6 +104,16 @@ public class TranslateTextActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 binding.tvSourceId.setText(gettingSourceLanguage(s));
+
+                switch (s){
+                    case "fr": textToSpeech.setLanguage(Locale.FRENCH); break;
+                    case "en": textToSpeech.setLanguage(Locale.ENGLISH); break;
+                    case "de": textToSpeech.setLanguage(Locale.GERMAN); break;
+                    case "ar": {
+                        textToSpeech.setLanguage(new Locale("ar"));
+                        break;
+                    }
+                }
             }
         });
 
@@ -162,6 +191,27 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        binding.ivCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyToClipboard();
+            }
+        });
+
+        binding.ivSpeak1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speak();
+            }
+        });
+
+        binding.ivSpeak2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speak1();
+            }
+        });
+
         binding.cv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,6 +228,31 @@ public class TranslateTextActivity extends AppCompatActivity {
 
         downloadEnglishLanguageModel();
 
+    }
+
+    private void gettingLocalLanguageFromLanguage(String language){
+        switch (language){
+            case "ENGLISH": textToSpeech1.setLanguage(Locale.ENGLISH); break;
+            case "GERMANY": textToSpeech1.setLanguage(Locale.GERMAN); break;
+            case "FRENCH": textToSpeech1.setLanguage(Locale.FRENCH); break;
+            case "ARABIC":{
+                textToSpeech1.setLanguage(new Locale("ar"));
+                break;
+            }
+        }
+    }
+
+    private void speak(){
+        textToSpeech.speak(binding.etTextTranslate.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void speak1(){
+        textToSpeech1.speak(binding.tvTranslatedText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    private void copyToClipboard(){
+        ClipData clipData = ClipData.newPlainText("Translated Text",binding.tvTranslatedText.getText().toString());
+        clipboardManager.setPrimaryClip(clipData);
     }
 
     private void pasteFromClipboard(){
