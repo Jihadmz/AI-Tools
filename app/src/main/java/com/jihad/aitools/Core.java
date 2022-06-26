@@ -1,6 +1,7 @@
 package com.jihad.aitools;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class Core {
+
+    public static SharedViewModel sharedViewModel;
+    public static Application application;
 
    public static boolean checkPermission(Activity activity, String permission, int requestCode){
         if (ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_DENIED){

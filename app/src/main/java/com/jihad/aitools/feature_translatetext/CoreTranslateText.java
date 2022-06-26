@@ -15,7 +15,6 @@ import com.jihad.aitools.feature_translatetext.presentation.ViewModelTranslateTe
 public class CoreTranslateText {
 
     public static ViewModelTranslateText viewModel;
-    public static Application application;
     public static RemoteModelManager modelManager;
 
     public static void translating(String languageCode, String text, String chosenLanguage) {

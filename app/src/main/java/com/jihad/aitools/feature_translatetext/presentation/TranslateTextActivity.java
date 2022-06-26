@@ -31,6 +31,8 @@ import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
+import com.jihad.aitools.Core;
+import com.jihad.aitools.MainActivity;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityTranslateTextBinding;
 import com.jihad.aitools.feature_extracttext.CoreET;
@@ -53,7 +55,6 @@ public class TranslateTextActivity extends AppCompatActivity {
         binding = ActivityTranslateTextBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        CoreTranslateText.application = getApplication();
         CoreTranslateText.viewModel = new ViewModelProvider(this).get(ViewModelTranslateText.class);
         CoreTranslateText.modelManager = RemoteModelManager.getInstance();
 
@@ -76,6 +77,20 @@ public class TranslateTextActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setTitle(getString(R.string.TranslateText));
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //  observing when the download dialog show appear
+        DialogDownloading dialogDownloading = new DialogDownloading(this);
+        Core.sharedViewModel.getIsDownloadingModel().observe((LifecycleOwner) TranslateTextActivity.this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    dialogDownloading.create();
+                    dialogDownloading.show();
+                } else {
+                    dialogDownloading.dismiss();
+                }
+            }
+        });
 
         // observing text to translate
         CoreTranslateText.viewModel.getTextToTranslate().observe(this, new Observer<String>() {
@@ -119,18 +134,6 @@ public class TranslateTextActivity extends AppCompatActivity {
                         break;
                     }
                 }
-            }
-        });
-
-        DialogDownloading dialogDownloading = new DialogDownloading(this);
-        CoreTranslateText.viewModel.getIsDownloadingModel().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    dialogDownloading.create();
-                    dialogDownloading.show();
-                } else
-                    dialogDownloading.dismiss();
             }
         });
 
@@ -308,7 +311,7 @@ public class TranslateTextActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void v) {
-                                    CoreTranslateText.viewModel.setIsDownloadingModel(false);
+                                    Core.sharedViewModel.setIsDownloadingModel(false);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -329,7 +332,6 @@ public class TranslateTextActivity extends AppCompatActivity {
 
         binding = null;
         CoreTranslateText.viewModel = null;
-        CoreTranslateText.application = null;
         CoreTranslateText.modelManager = null;
     }
 }

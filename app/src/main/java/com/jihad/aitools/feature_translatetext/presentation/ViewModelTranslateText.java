@@ -12,7 +12,6 @@ public class ViewModelTranslateText extends ViewModel {
     private final MutableLiveData<String> sourceLanguageId;
     private final MutableLiveData<String> chosenLanguageId;
     private final MutableLiveData<String> translatedText;
-    private final MutableLiveData<Boolean> isDownloadingModel;
 
     private final RepoImplTranslateText repoImplTranslateText;
 
@@ -23,7 +22,6 @@ public class ViewModelTranslateText extends ViewModel {
         sourceLanguageId = new MutableLiveData<>("en");
         chosenLanguageId = new MutableLiveData<>(repoImplTranslateText.getChosenLanguage());
         translatedText = new MutableLiveData<>();
-        isDownloadingModel = new MutableLiveData<>();
     }
 
     public LiveData<String> getTextToTranslate() {
@@ -58,14 +56,4 @@ public class ViewModelTranslateText extends ViewModel {
     public void setTranslatedText(String translatedText) {
         this.translatedText.setValue(translatedText);
     }
-
-
-    public MutableLiveData<Boolean> getIsDownloadingModel() {
-        return isDownloadingModel;
-    }
-
-    public void setIsDownloadingModel(boolean value){
-        isDownloadingModel.setValue(value);
-    }
-
 }

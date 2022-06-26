@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
+import com.jihad.aitools.Core;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.BottomsheetLanguagechooserBinding;
 import com.jihad.aitools.feature_translatetext.CoreTranslateText;
@@ -113,7 +114,7 @@ public class DialogLanguageChooser extends Dialog {
         binding.ivDownloadSaudi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CoreTranslateText.viewModel.setIsDownloadingModel(true);
+                Core.sharedViewModel.setIsDownloadingModel(true);
                 downloadingLanguageModel("ar", binding.ivDownloadSaudi);
             }
         });
@@ -121,7 +122,7 @@ public class DialogLanguageChooser extends Dialog {
         binding.ivDownloadFrench.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CoreTranslateText.viewModel.setIsDownloadingModel(true);
+                Core.sharedViewModel.setIsDownloadingModel(true);
                 downloadingLanguageModel("fr", binding.ivDownloadFrench);
             }
         });
@@ -129,7 +130,7 @@ public class DialogLanguageChooser extends Dialog {
         binding.ivDownloadEnglish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CoreTranslateText.viewModel.setIsDownloadingModel(true);
+                Core.sharedViewModel.setIsDownloadingModel(true);
                 downloadingLanguageModel("en", binding.ivDownloadEnglish);
             }
         });
@@ -137,7 +138,7 @@ public class DialogLanguageChooser extends Dialog {
         binding.ivDownloadGermany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CoreTranslateText.viewModel.setIsDownloadingModel(true);
+                Core.sharedViewModel.setIsDownloadingModel(true);
                 downloadingLanguageModel("de", binding.ivDownloadGermany);
             }
         });
@@ -191,7 +192,7 @@ public class DialogLanguageChooser extends Dialog {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void v) {
-                        CoreTranslateText.viewModel.setIsDownloadingModel(false);
+                        Core.sharedViewModel.setIsDownloadingModel(false);
                         imageView.setVisibility(View.INVISIBLE);
                         checkingIfDownloadNeeded(languageCode, imageView);
                     }

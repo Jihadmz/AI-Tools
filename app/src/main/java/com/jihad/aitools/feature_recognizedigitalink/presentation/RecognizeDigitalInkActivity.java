@@ -2,6 +2,8 @@ package com.jihad.aitools.feature_recognizedigitalink.presentation;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -21,6 +23,8 @@ import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognizer;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
 import com.google.mlkit.vision.digitalink.Ink;
+import com.jihad.aitools.Core;
+import com.jihad.aitools.MainActivity;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityRecognizeDigitalInkBinding;
 import com.jihad.aitools.feature_recognizedigitalink.presentation.components.InkView;
@@ -58,6 +62,21 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             }
         });
 
+        //  observing when the download dialog should appear
+        DialogDownloading dialogDownloading = new DialogDownloading(this);
+        Core.sharedViewModel.getIsDownloadingModel().observe((LifecycleOwner) RecognizeDigitalInkActivity.this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    dialogDownloading.create();
+                    dialogDownloading.show();
+                } else {
+                    dialogDownloading.dismiss();
+                }
+            }
+        });
+
+        //  creating and downloading the model if needed
         DigitalInkRecognitionModelIdentifier modelIdentifier;
         modelIdentifier =
                 DigitalInkRecognitionModelIdentifier.EN_US;
@@ -68,13 +87,12 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             public void onSuccess(Boolean aBoolean) {
 
                 if (!aBoolean){
-                    DialogDownloading dialogDownloading = new DialogDownloading(RecognizeDigitalInkActivity.this);
-                    dialogDownloading.create();
-                    dialogDownloading.show();
+                    Core.sharedViewModel.setIsDownloadingModel(true);
 
                     remoteModelManager
                             .download(model, new DownloadConditions.Builder().build())
                             .addOnSuccessListener(aVoid -> {
+                                Core.sharedViewModel.setIsDownloadingModel(false);
                                 Log.i("Jihad", "Model downloaded");
                                 getRecognizer();
                             })
