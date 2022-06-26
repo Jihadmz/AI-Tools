@@ -8,15 +8,17 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InkView extends View {
 
     private Paint brush;
-    private ViewGroup.LayoutParams params;
-    private Path path;
+    public static Path path;
+    public static List<Path> pathList;
 
     public InkView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -36,14 +38,13 @@ public class InkView extends View {
     private void init(){
         brush = new Paint();
         path = new Path();
+        pathList = new ArrayList<>();
 
         brush.setAntiAlias(true);
         brush.setColor(Color.parseColor("#7075DC"));
         brush.setStyle(Paint.Style.STROKE);
         brush.setStrokeJoin(Paint.Join.ROUND);
         brush.setStrokeWidth(8f);
-
-        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
@@ -54,20 +55,28 @@ public class InkView extends View {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 path.moveTo(x, y);
+                invalidate();
                 return true;
 
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x, y);
-                break;
+                pathList.add(path);
+                invalidate();
+                return true;
 
             default: return false;
         }
-        postInvalidate();
-        return false;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, brush);
+////        canvas.clipRect(0, getTop(), getRight(), getBottom());
+////        for (int i = 0; i < pathList.size(); i++) {
+////            canvas.drawPath(pathList.get(i),brush);
+////            invalidate();
+////        }
+////        postInvalidate();
+        invalidate();
     }
 }

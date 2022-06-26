@@ -1,13 +1,11 @@
 package com.jihad.aitools.feature_translatetext.presentation;
 
-import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -19,23 +17,16 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.languageid.LanguageIdentification;
 import com.google.mlkit.nl.languageid.LanguageIdentifier;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
-import com.google.mlkit.nl.translate.Translation;
-import com.google.mlkit.nl.translate.Translator;
-import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.jihad.aitools.Core;
-import com.jihad.aitools.MainActivity;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityTranslateTextBinding;
-import com.jihad.aitools.feature_extracttext.CoreET;
 import com.jihad.aitools.feature_translatetext.CoreTranslateText;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogDownloading;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogLanguageChooser;
@@ -148,6 +139,8 @@ public class TranslateTextActivity extends AppCompatActivity {
         });
 
         //  on text changes listener
+        LanguageIdentifier languageIdentifier =
+                LanguageIdentification.getClient();
         binding.etTextTranslate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -162,8 +155,6 @@ public class TranslateTextActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                LanguageIdentifier languageIdentifier =
-                        LanguageIdentification.getClient();
                 languageIdentifier.identifyLanguage(editable.toString())
                         .addOnSuccessListener(
                                 new OnSuccessListener<String>() {
@@ -190,7 +181,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         binding.ivPaste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pasteFromClipboard();
+                Core.pasteFromClipboardInToEditText(binding.etTextTranslate);
             }
         });
 
@@ -206,7 +197,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         binding.ivCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                copyToClipboard();
+                Core.copyToClipboard(binding.tvTranslatedText.getText().toString());
             }
         });
 
@@ -237,7 +228,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         });
 
         // if user is getting here from the text extraction activity -> user wants to translate extract tex
-        if (getIntent().hasExtra("ExtractedText")) { // user coming from Extracted text fragment with the text being copied
+        if (getIntent().hasExtra("ExtractedText")) { // user coming here with the text being copied to translate it
             String text = getIntent().getStringExtra("ExtractedText");
             binding.etTextTranslate.setText(text);
         }
@@ -265,18 +256,6 @@ public class TranslateTextActivity extends AppCompatActivity {
 
     private void speak1(){
         textToSpeech1.speak(binding.tvTranslatedText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, null);
-    }
-
-    private void copyToClipboard(){
-        ClipData clipData = ClipData.newPlainText("Translated Text",binding.tvTranslatedText.getText().toString());
-        clipboardManager.setPrimaryClip(clipData);
-    }
-
-    private void pasteFromClipboard(){
-        ClipData clipData = clipboardManager.getPrimaryClip();
-        ClipData.Item item = clipData.getItemAt(0);
-        binding.etTextTranslate.setText(binding.etTextTranslate.getText().toString() + item.getText().toString());
-        binding.etTextTranslate.setSelection(binding.etTextTranslate.getText().length());
     }
 
     private String gettingSourceLanguage(String languageCode) {
