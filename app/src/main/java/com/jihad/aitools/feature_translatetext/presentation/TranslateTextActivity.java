@@ -77,6 +77,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         actionBar.setTitle(getString(R.string.TranslateText));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // observing text to translate
         CoreTranslateText.viewModel.getTextToTranslate().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -84,6 +85,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        // observing translated text
         CoreTranslateText.viewModel.getTranslatedText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -91,11 +93,13 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        //  Observing chosen language
         CoreTranslateText.viewModel.getChosenLanguageId().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 binding.tvChosenId.setText(s);
 
+                // this will set the language of the textToSpeech1 relative to the chosen language
                 gettingLocalLanguageFromLanguage(s);
             }
         });
@@ -105,6 +109,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             public void onChanged(String s) {
                 binding.tvSourceId.setText(gettingSourceLanguage(s));
 
+                //  setting the language of the textToSpeech relative to the source language
                 switch (s){
                     case "fr": textToSpeech.setLanguage(Locale.FRENCH); break;
                     case "en": textToSpeech.setLanguage(Locale.ENGLISH); break;
@@ -129,6 +134,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        //  Clicking on the chosen text -> chooser dialog opens
         binding.tvChosenId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +144,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
-
+        //  on text changes listener
         binding.etTextTranslate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -177,6 +183,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        //  paste icon
         binding.ivPaste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,6 +191,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        // clear icon
         binding.ivClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,6 +199,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        // copy icon
         binding.ivCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,6 +207,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        // speak text to translate icon
         binding.ivSpeak1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,6 +215,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        //  speak text translated icon
         binding.ivSpeak2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,6 +223,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        //  on card view listener -> edit text request focus
         binding.cv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,11 +233,13 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
 
+        // if user is getting here from the text extraction activity -> user wants to translate extract tex
         if (getIntent().hasExtra("ExtractedText")) { // user coming from Extracted text fragment with the text being copied
             String text = getIntent().getStringExtra("ExtractedText");
             binding.etTextTranslate.setText(text);
         }
 
+        //  Downloading english model if it is not already downloaded
         downloadEnglishLanguageModel();
 
     }

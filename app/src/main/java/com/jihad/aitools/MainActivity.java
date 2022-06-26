@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jihad.aitools.databinding.ActivityMainBinding;
 import com.jihad.aitools.feature_extracttext.presentation.TextExtractionActivity;
+import com.jihad.aitools.feature_recognizedigitalink.presentation.RecognizeDigitalInkActivity;
 import com.jihad.aitools.feature_translatetext.presentation.TranslateTextActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext(), TranslateTextActivity.class));
+            }
+        });
+
+        binding.laDigitalInk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), RecognizeDigitalInkActivity.class));
             }
         });
     }

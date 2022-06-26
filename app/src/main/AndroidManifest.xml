@@ -17,10 +17,13 @@
         android:theme="@style/Theme.AITools"
         tools:targetApi="31">
         <activity
-            android:name=".feature_translatetext.presentation.TranslateTextActivity"
+            android:name=".feature_recognizedigitalink.presentation.RecognizeDigitalInkActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
-
+        <activity
+            android:name=".feature_translatetext.presentation.TranslateTextActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".feature_extracttext.presentation.TextExtractionActivity"
             android:exported="false"

@@ -35,5 +35,14 @@
            android:layout_width="match_parent"
            android:layout_weight="1"/>
 
+       <com.airbnb.lottie.LottieAnimationView
+           android:id="@+id/la_digitalInk"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           app:lottie_rawRes="@raw/digital_ink"
+           app:lottie_loop="true"
+           app:lottie_autoPlay="true"
+           android:layout_weight="1"/>
+
    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

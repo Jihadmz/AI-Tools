@@ -50,6 +50,9 @@ dependencies {
     //  Ml kit text language translatiom
     implementation 'com.google.mlkit:translate:17.0.0'
 
+    //  Ml kit Digital Ink recognizer
+    implementation 'com.google.mlkit:digital-ink-recognition:18.0.0'
+
     //  Lottie animations
     implementation "com.airbnb.android:lottie-compose:5.0.3"
 
