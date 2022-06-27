@@ -25,4 +25,5 @@
     <string name="DigitalInk">Digital Ink</string>
     <string name="DetectedText">Detected Text</string>
     <string name="CouldntTranslate">Couldn\'t translate, make sure you have installed the language you\'re using</string>
+    <string name="Loading">Loading, please wait...</string>
 </resources>

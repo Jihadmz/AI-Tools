@@ -12,6 +12,7 @@ import com.jihad.aitools.databinding.ActivityMainBinding;
 import com.jihad.aitools.feature_extracttext.presentation.TextExtractionActivity;
 import com.jihad.aitools.feature_recognizedigitalink.presentation.RecognizeDigitalInkActivity;
 import com.jihad.aitools.feature_translatetext.presentation.TranslateTextActivity;
+import com.jihad.aitools.shared.view_models.SharedViewModel;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -28,7 +28,7 @@ import com.jihad.aitools.Core;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityTranslateTextBinding;
 import com.jihad.aitools.feature_translatetext.CoreTranslateText;
-import com.jihad.aitools.feature_translatetext.presentation.components.DialogDownloading;
+import com.jihad.aitools.shared.components.DialogDownloading;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogLanguageChooser;
 
 import java.util.Locale;
@@ -274,7 +274,7 @@ public class TranslateTextActivity extends AppCompatActivity {
     }
 
     private void downloadEnglishLanguageModel() {
-        // Download a model.
+        // Download english model.
         TranslateRemoteModel englishModel =
                 new TranslateRemoteModel.Builder("en").build();
 

@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.jihad.aitools.shared.view_models.SharedViewModel;
+
 public class Core {
 
     public static SharedViewModel sharedViewModel;

@@ -1,18 +1,12 @@
-package com.jihad.aitools.feature_translatetext.presentation.components;
+package com.jihad.aitools.shared.components;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 
-import com.jihad.aitools.Core;
-import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.DialogDownloadingBinding;
-import com.jihad.aitools.feature_translatetext.CoreTranslateText;
 
 public class DialogDownloading extends Dialog {
 

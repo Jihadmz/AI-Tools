@@ -11,14 +11,10 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class InkView extends View {
 
     private Paint brush;
     public static Path path;
-    public static List<Path> pathList;
 
     public InkView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -38,7 +34,6 @@ public class InkView extends View {
     private void init(){
         brush = new Paint();
         path = new Path();
-        pathList = new ArrayList<>();
 
         brush.setAntiAlias(true);
         brush.setColor(Color.parseColor("#7075DC"));
@@ -60,7 +55,6 @@ public class InkView extends View {
 
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x, y);
-                pathList.add(path);
                 invalidate();
                 return true;
 
@@ -71,12 +65,6 @@ public class InkView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, brush);
-////        canvas.clipRect(0, getTop(), getRight(), getBottom());
-////        for (int i = 0; i < pathList.size(); i++) {
-////            canvas.drawPath(pathList.get(i),brush);
-////            invalidate();
-////        }
-////        postInvalidate();
         invalidate();
     }
 }

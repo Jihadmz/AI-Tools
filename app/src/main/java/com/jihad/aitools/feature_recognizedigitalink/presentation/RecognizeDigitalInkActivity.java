@@ -2,8 +2,6 @@ package com.jihad.aitools.feature_recognizedigitalink.presentation;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -32,7 +30,8 @@ import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityRecognizeDigitalInkBinding;
 import com.jihad.aitools.feature_recognizedigitalink.presentation.components.InkView;
 import com.jihad.aitools.feature_translatetext.presentation.TranslateTextActivity;
-import com.jihad.aitools.feature_translatetext.presentation.components.DialogDownloading;
+import com.jihad.aitools.shared.components.DialogDownloading;
+import com.jihad.aitools.shared.components.DialogLoading;
 
 public class RecognizeDigitalInkActivity extends AppCompatActivity {
 
@@ -41,7 +40,7 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
     private Ink.Builder inkBuilder;
     private Ink.Stroke.Builder strokeBuilder;
     private DigitalInkRecognizer recognizer;
-    private boolean isActive;
+    private boolean isActive; // variable for detecting when the activity is active
 
     @Override
     protected void onStart() {
@@ -57,6 +56,9 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
         binding = ActivityRecognizeDigitalInkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //  making the loading dialog appear so the recognizer get initialized
+        Core.sharedViewModel.setIsLoading(true);
+
         //  Setting up actionbar
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -65,6 +67,33 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
 
         //  initializing fields
         inkBuilder = Ink.builder();
+
+        //  creating and downloading the model if needed
+        DigitalInkRecognitionModelIdentifier modelIdentifier = DigitalInkRecognitionModelIdentifier.EN_US;
+        DigitalInkRecognitionModel model = DigitalInkRecognitionModel.builder(modelIdentifier).build();
+        RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
+        remoteModelManager.isModelDownloaded(model).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+
+                if (!aBoolean){
+                    Core.sharedViewModel.setIsDownloadingModel(true);
+
+                    remoteModelManager
+                            .download(model, new DownloadConditions.Builder().build())
+                            .addOnSuccessListener(aVoid -> {
+                                Core.sharedViewModel.setIsDownloadingModel(false);
+                                getRecognizer();
+                                Core.sharedViewModel.setIsLoading(false);
+                            })
+                            .addOnFailureListener(
+                                    e -> Log.e("Jihad", "Error while downloading a model: " + e));
+                }else {
+                    getRecognizer();
+                    Core.sharedViewModel.setIsLoading(false);
+                }
+            }
+        });
 
         float x = 0;
         float y = 0;
@@ -98,10 +127,8 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //  clearing the ink and the text detected
                 InkView.path.reset();
-                InkView.pathList.clear();
-                binding.etDetectedText.setText("");
-                inkBuilder = null;
                 inkBuilder = Ink.builder();
+                binding.etDetectedText.setText("");
             }
         });
 
@@ -110,7 +137,6 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // clearing the ink only
                 InkView.path.reset();
-                InkView.pathList.clear();
             }
         });
 
@@ -128,42 +154,19 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             }
         });
 
-        //  creating and downloading the model if needed
-        DigitalInkRecognitionModelIdentifier modelIdentifier;
-        modelIdentifier =
-                DigitalInkRecognitionModelIdentifier.EN_US;
-        DigitalInkRecognitionModel model = DigitalInkRecognitionModel.builder(modelIdentifier).build();
-        RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
-        remoteModelManager.isModelDownloaded(model).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+        //  observing when the loading dialog should appear
+        DialogLoading dialogLoading = new DialogLoading(this);
+        Core.sharedViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
             @Override
-            public void onSuccess(Boolean aBoolean) {
-
-                if (!aBoolean){
-                    Core.sharedViewModel.setIsDownloadingModel(true);
-
-                    remoteModelManager
-                            .download(model, new DownloadConditions.Builder().build())
-                            .addOnSuccessListener(aVoid -> {
-                                Core.sharedViewModel.setIsDownloadingModel(false);
-                                getRecognizer();
-                            })
-                            .addOnFailureListener(
-                                    e -> Log.e("Jihad", "Error while downloading a model: " + e));
-                }else
-                    getRecognizer();
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    dialogLoading.create();
+                    dialogLoading.show();
+                } else {
+                    dialogLoading.dismiss();
+                }
             }
         });
-    }
-
-    private Paint initPaint(){
-       Paint brush = new Paint();
-        brush.setAntiAlias(true);
-        brush.setColor(Color.parseColor("#7075DC"));
-        brush.setStyle(Paint.Style.STROKE);
-        brush.setStrokeJoin(Paint.Join.ROUND);
-        brush.setStrokeWidth(8f);
-
-        return brush;
     }
 
     public void addNewTouchEvent(MotionEvent event, float x, float y) {
