@@ -1,7 +1,5 @@
 package com.jihad.aitools.feature_translatetext;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -10,8 +8,6 @@ import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
-import com.jihad.aitools.Core;
-import com.jihad.aitools.R;
 import com.jihad.aitools.feature_translatetext.presentation.ViewModelTranslateText;
 
 public class CoreTranslateText {
@@ -41,7 +37,6 @@ public class CoreTranslateText {
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Core.application, Core.application.getString(R.string.CouldntTranslate), Toast.LENGTH_SHORT).show();
                             }
                         });
     }

@@ -1,6 +1,5 @@
 package com.jihad.aitools.feature_translatetext.presentation;
 
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -28,15 +27,14 @@ import com.jihad.aitools.Core;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityTranslateTextBinding;
 import com.jihad.aitools.feature_translatetext.CoreTranslateText;
-import com.jihad.aitools.shared.components.DialogDownloading;
 import com.jihad.aitools.feature_translatetext.presentation.components.DialogLanguageChooser;
+import com.jihad.aitools.shared.components.DialogDownloading;
 
 import java.util.Locale;
 
 public class TranslateTextActivity extends AppCompatActivity {
 
     private ActivityTranslateTextBinding binding;
-    private ClipboardManager clipboardManager;
     private TextToSpeech textToSpeech;
     private TextToSpeech textToSpeech1;
 
@@ -49,7 +47,6 @@ public class TranslateTextActivity extends AppCompatActivity {
         CoreTranslateText.viewModel = new ViewModelProvider(this).get(ViewModelTranslateText.class);
         CoreTranslateText.modelManager = RemoteModelManager.getInstance();
 
-        clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         textToSpeech = new TextToSpeech(TranslateTextActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
