@@ -6,36 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".feature_recognizedigitalink.presentation.RecognizeDigitalInkActivity">
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       >
-
       <RelativeLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="match_parent"
           android:layout_margin="10dp">
 
          <include layout="@layout/ink_view"
              android:id="@+id/in_inkView"
              android:layout_width="match_parent"
-             android:layout_height="400dp"
-             android:layout_alignParentTop="true"/>
+             android:layout_height="match_parent"
+             android:layout_alignParentTop="true"
+             android:layout_above="@+id/et_detectedText"
+             android:layout_marginBottom="20dp"/>
 
          <EditText
              android:id="@+id/et_detectedText"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_below="@+id/in_inkView"
+             android:layout_above="@+id/ll"
+             android:layout_marginBottom="20dp"
              android:hint="@string/DetectedText"
-             android:overScrollMode="ifContentScrolls"/>
+             android:maxLines="4"
+             android:minHeight="48dp"
+             android:overScrollMode="ifContentScrolls" />
 
          <LinearLayout
+             android:id="@+id/ll"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_below="@+id/et_detectedText"
              android:layout_centerHorizontal="true"
-             android:layout_marginTop="20dp"
+             android:layout_marginBottom="20dp"
+             android:layout_alignParentBottom="true"
              >
 
          <ImageView
@@ -65,15 +66,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/eraser"
-                android:layout_marginStart="30dp" />
+                android:layout_marginStart="30dp"
+                />
 
          </LinearLayout>
-
       </RelativeLayout>
-   </ScrollView>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

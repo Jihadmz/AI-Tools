@@ -9,7 +9,7 @@
         <entry key="app/src/main/res/drawable/delete_24.xml" value="0.162" />
         <entry key="app/src/main/res/drawable/dialog_bg.xml" value="0.1405" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.196875" />
-        <entry key="app/src/main/res/layout/activity_recognize_digital_ink.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/activity_recognize_digital_ink.xml" value="0.19" />
         <entry key="app/src/main/res/layout/activity_text_extraction.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_translate_text.xml" value="0.22" />
         <entry key="app/src/main/res/layout/bottomsheet_languagechooser.xml" value="0.19166666666666668" />
