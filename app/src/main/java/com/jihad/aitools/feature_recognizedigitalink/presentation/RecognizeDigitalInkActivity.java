@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -24,7 +23,6 @@ import com.google.mlkit.vision.digitalink.DigitalInkRecognizer;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
 import com.google.mlkit.vision.digitalink.Ink;
 import com.google.mlkit.vision.digitalink.RecognitionContext;
-import com.google.mlkit.vision.digitalink.WritingArea;
 import com.jihad.aitools.Core;
 import com.jihad.aitools.R;
 import com.jihad.aitools.databinding.ActivityRecognizeDigitalInkBinding;
@@ -41,6 +39,7 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
     private Ink.Stroke.Builder strokeBuilder;
     private DigitalInkRecognizer recognizer;
     private boolean isActive; // variable for detecting when the activity is active
+    private String recognizedText = "";
 
     @Override
     protected void onStart() {
@@ -95,17 +94,18 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             }
         });
 
+        //  on handwriting listener
         float x = 0;
         float y = 0;
         binding.inInkView.inkView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 addNewTouchEvent(motionEvent, x, y);
-                processInk(recognizer);
                 return false;
             }
         });
 
+        //  on copy click listener
         binding.ivCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +114,7 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             }
         });
 
+        //  on translate click listener
         binding.ivTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +123,7 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             }
         });
 
+        //  on clear all click listener
         binding.ivClearAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +134,7 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
             }
         });
 
+        //  on erase click listener
         binding.ivErase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +172,9 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * adding the points of user actions
+     */
     public void addNewTouchEvent(MotionEvent event, float x, float y) {
         x = event.getX();
         y = event.getY();
@@ -187,10 +193,14 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
                 strokeBuilder.addPoint(Ink.Point.create(x, y));
                 inkBuilder.addStroke(strokeBuilder.build());
                 strokeBuilder = null;
+                processInk(recognizer);
                 break;
         }
     }
 
+    /**
+     * initializing the recognizer with the options
+     */
     private void getRecognizer(){
         // Specify the recognition model for a language
         DigitalInkRecognitionModelIdentifier modelIdentifier;
@@ -207,26 +217,27 @@ public class RecognizeDigitalInkActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * processing the ink drawn by the user and setting the result to the edit text
+     */
     private void processInk(DigitalInkRecognizer recognizer){
         String preContext = binding.etDetectedText.getText().toString();
-        float width = ViewGroup.LayoutParams.MATCH_PARENT;
-        float height = 400;
 
         RecognitionContext recognitionContext =
                 RecognitionContext.builder()
                         .setPreContext(preContext)
-                        .setWritingArea(new WritingArea(width, height))
                         .build();
 
         // This is what to send to the recognizer.
-        Ink ink = inkBuilder.build();
+       Ink ink = inkBuilder.build();
         recognizer.recognize(ink, recognitionContext)
                 .addOnSuccessListener(
                         // `result` contains the recognizer's answers as a RecognitionResult.
                         // Logs the text from the top candidate.
                         result -> {
                             if (isActive) { // if this activity is running only get the text processed
-                                binding.etDetectedText.setText(result.getCandidates().get(0).getText());
+                                recognizedText = result.getCandidates().get(0).getText();
+                                binding.etDetectedText.setText(recognizedText);
                             }
                         }
                 )
