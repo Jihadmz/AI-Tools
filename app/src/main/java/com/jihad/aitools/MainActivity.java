@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Core.sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         Core.application = getApplication();
+        Core.sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         Core.clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         binding.laEt.setOnClickListener(new View.OnClickListener() {

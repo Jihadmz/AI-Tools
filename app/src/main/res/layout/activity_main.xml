@@ -39,7 +39,7 @@
            android:id="@+id/la_digitalInk"
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           app:lottie_rawRes="@raw/digital_ink"
+           app:lottie_rawRes="@raw/writing"
            app:lottie_loop="true"
            app:lottie_autoPlay="true"
            android:layout_weight="1"/>

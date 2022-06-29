@@ -2,7 +2,7 @@ package com.jihad.aitools.feature_extracttext.presentation;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.ClipboardManager;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -31,6 +30,7 @@ import com.jihad.aitools.feature_extracttext.presentation.components.DialogDelet
 import com.jihad.aitools.feature_extracttext.presentation.extract_text.ExtractTextViewModel;
 import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryAdapter;
 import com.jihad.aitools.feature_extracttext.presentation.history.ExtractTextHistoryViewModel;
+import com.jihad.aitools.shared.view_models.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +50,16 @@ public class TextExtractionActivity extends AppCompatActivity {
         CoreET.extractTextHistoryViewModel = new ViewModelProvider(this).get(ExtractTextHistoryViewModel.class);
         CoreET.list = new ArrayList<>();
         CoreET.extractTextHistoryAdapter = new ExtractTextHistoryAdapter(this, CoreET.list, binding.tl);
+
+        //  here we are re-initializing these fields that are initialized in MainActivity, because if user leaves
+        //  the app for capturing photos, these fields will be null. So here we are making sure that if the user
+        //  leaves the app in this case to the camera app, we will initialize the fields when he returned back to this
+        //  activity (through the back button)
+        if (Core.application == null){
+            Core.application = getApplication();
+            Core.sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+            Core.clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        }
 
         //  Setting up actionbar
         ActionBar actionBar = getSupportActionBar();
