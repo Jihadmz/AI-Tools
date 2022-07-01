@@ -64,6 +64,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         actionBar.setTitle(getString(R.string.TranslateText));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
         //  observing when the download dialog show appear
         DialogDownloading dialogDownloading = new DialogDownloading(this);
         Core.sharedViewModel.getIsDownloadingModel().observe((LifecycleOwner) TranslateTextActivity.this, new Observer<Boolean>() {
@@ -307,5 +308,10 @@ public class TranslateTextActivity extends AppCompatActivity {
         binding = null;
         CoreTranslateText.viewModel = null;
         CoreTranslateText.modelManager = null;
+
+        //  hide keyboard when exiting from this activity because if keyboard is shown, the keyboard will not hide
+        //  when exiting it, so hide it manually
+        Core.hideKeyboard();
     }
+
 }
