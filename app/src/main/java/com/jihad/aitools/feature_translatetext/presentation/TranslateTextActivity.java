@@ -1,12 +1,10 @@
 package com.jihad.aitools.feature_translatetext.presentation;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -187,6 +185,7 @@ public class TranslateTextActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 binding.etTextTranslate.getText().clear();
+                Core.requestFocusAndShowKeyboard(binding.etTextTranslate);
             }
         });
 
@@ -218,9 +217,7 @@ public class TranslateTextActivity extends AppCompatActivity {
         binding.cv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.etTextTranslate.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+               Core.requestFocusAndShowKeyboard(binding.etTextTranslate);
             }
         });
 
@@ -232,6 +229,8 @@ public class TranslateTextActivity extends AppCompatActivity {
 
         //  Downloading english model if it is not already downloaded
         downloadEnglishLanguageModel();
+
+
 
     }
 
@@ -300,7 +299,6 @@ public class TranslateTextActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     protected void onDestroy() {

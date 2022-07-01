@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -52,5 +54,16 @@ public class Core {
 
     public static void showToast(String text, int length){
         Toast.makeText(application, text, length).show();
+    }
+
+    public static void requestFocusAndShowKeyboard(EditText editText){
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) application.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+    }
+
+    public static void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) application.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
     }
 }
