@@ -21,7 +21,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            //  enabling R8 for the release build (optimizing app size)
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
